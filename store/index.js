@@ -59,6 +59,12 @@ const createStore = () => {
                     .then((data) => {
                         console.log(data);
                         vuexContext.commit("setToken", data.idToken);
+                        if (process.client) {
+                            localStorage.setItem("token", data.idToken);
+                        }
+                        this.$cookies.set("token", data.idToken);
+
+
                         this.$axios.$post('http://localhost:3000/api/track-data', { data: 'Authenticated!' })
                         return data;
                     })
@@ -74,7 +80,16 @@ const createStore = () => {
                         console.log(e)
                         this.$toast.error('error').goAway(1500)
                     })
-            }
+            },
+            setToken(vuexContext, token) {
+                vuexContext.commit("setToken", token);
+                this.$cookies.set("token", token);
+            },
+            clearToken(vuexContext) {
+                vuexContext.commit("setToken", null);
+                this.$cookies.set("token", null);
+                localStorage.setItem("token", null);
+            },
         },
         getters: {
             loadedProducts(state) {

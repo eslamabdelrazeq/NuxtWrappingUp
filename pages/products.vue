@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  middleware: 'log',
+  middleware: ['log','auth'],
   components: {},
   data() {
     return {}

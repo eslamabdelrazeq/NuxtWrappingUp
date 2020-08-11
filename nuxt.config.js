@@ -1,3 +1,4 @@
+import axios from 'axios'
 const bodyParser = require('body-parser')
 export default {
     /*
@@ -66,8 +67,62 @@ export default {
         // Doc: https://github.com/nuxt/content
         '@nuxt/content',
         '@nuxtjs/toast',
-
+        'cookie-universal-nuxt'
     ],
+    workbox: {
+        runtimeCaching: [{
+                urlPattern: 'localhost:3000/.*',
+                handler: 'cacheFirst',
+                method: 'GET'
+            },
+            {
+                urlPattern: 'localhost:8088/.*',
+                handler: 'cacheFirst',
+                method: 'GET'
+            },
+            {
+                urlPattern: 'https://nuxtwrappingup.firebaseio.com/.*',
+                handler: 'cacheFirst',
+                method: 'GET',
+                strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+            },
+            {
+                urlPattern: 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js',
+                handler: 'cacheFirst',
+                method: 'GET',
+                strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+            },
+            {
+                urlPattern: 'https://cdn.mos.cms.futurecdn.net/.*',
+                handler: 'cacheFirst',
+                method: 'GET',
+                strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+            },
+            {
+                urlPattern: 'https://cdn.mos.cms.futurecdn.net/.*',
+                handler: 'cacheFirst',
+                method: 'GET',
+                strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+            },
+            {
+                urlPattern: 'https://cdn.mos.cms.futurecdn.net/.*',
+                handler: 'cacheFirst',
+                method: 'GET',
+                strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+            }
+        ]
+    },
+    pwa: {
+        meta: {
+            title: 'My PWA',
+            author: 'Me',
+        },
+        manifest: {
+            name: 'Nuxt.js PWAs are so easy',
+            short_name: 'Nuxt.js PWA',
+            lang: 'en',
+        }
+    },
     toast: {
         position: 'top-center',
         register: [ // Register custom toasts
@@ -114,5 +169,21 @@ export default {
     serverMiddleware: [
         bodyParser.json(),
         '~/api'
-    ]
+    ],
+    generate: {
+        routes: function() {
+            return axios
+                .get("https://nuxtwrappingup.firebaseio.com/nuxtwrappingup.json")
+                .then(res => {
+                    const routes = [];
+                    for (const key in res.data) {
+                        routes.push({
+                            route: "/products/" + key,
+                            payload: { productData: res.data[key] }
+                        });
+                    }
+                    return routes;
+                });
+        }
+    }
 }

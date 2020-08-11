@@ -42,6 +42,7 @@
 <script>
 export default {
   layout: 'empty',
+  middleware: 'auth',
   data() {
     return {
       email: '',
@@ -58,7 +59,7 @@ export default {
         })
         .then((data) => {
           this.$toast.success('Successfully logged in').goAway(1500)
-          this.$router.push('/products');
+          this.$router.push('/products')
         })
         .catch((e) => {
           this.$toast.error('error').goAway(1500)

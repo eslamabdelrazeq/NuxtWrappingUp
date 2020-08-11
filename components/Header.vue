@@ -9,12 +9,32 @@
       <nuxt-link class="p-2" to="/">Home</nuxt-link>
       <nuxt-link class="p-2" to="/products">Products</nuxt-link>
       <nuxt-link class="p-2" to="/products/add">Add Product</nuxt-link>
-      <a class="p-2" href="#">Support</a>
-      <a class="p-2" href="#">Pricing</a>
+      <a class="p-2" v-if="isAuthenticated" @click="logout" href="#">Logout</a>
     </nav>
     <a class="btn btn-outline-primary" href="#">Sign up</a>
   </div>
 </template>
+<script>
+export default {
+  methods: {
+    logout() {
+      if (this.isAuthenticated) {
+        this.$store.dispatch('clearToken');
+        let that = this;
+        //this.$router.push('/auth/login');
+        setTimeout(function () {
+          location.reload();
+        }, 200)
+      }
+    },
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated
+    },
+  },
+}
+</script>
 <style scoped>
 .nuxt-link-exact-active {
   color: red;

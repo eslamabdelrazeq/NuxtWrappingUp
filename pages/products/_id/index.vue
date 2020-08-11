@@ -11,15 +11,21 @@ export default {
     // return /^\d+$/.test(data.params.id)
     return true
   },
-  computed: {
-    loadedProduct() {
-      return this.$store.getters.loadedProducts.find(
-        (d) => d.id == this.$route.params.id
-      )
-    },
+  asyncData(context) {
+    if (context.payload) {
+      return {
+        loadedProduct: context.payload.productData,
+      }
+    }
+    let data = context.store.getters.loadedProducts.find(
+      (d) => d.id == context.route.params.id
+    )
+    return {
+      loadedProduct: data
+    }
   },
   head: {
-    title: "Single page details title"
-  }
+    title: 'Single page details title',
+  },
 }
 </script>

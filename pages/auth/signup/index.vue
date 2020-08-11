@@ -42,6 +42,7 @@
 <script>
 export default {
   layout: 'empty',
+  middleware: 'auth',
   data() {
     return {
       email: '',
@@ -50,7 +51,8 @@ export default {
   },
   methods: {
     submit() {
-      this.$store.dispatch("signUp", {
+      this.$store
+        .dispatch('signUp', {
           email: this.email,
           password: this.password,
           returnSecureToken: true,
