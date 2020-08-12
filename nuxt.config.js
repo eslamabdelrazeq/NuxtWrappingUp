@@ -87,6 +87,12 @@ export default {
                 strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
             },
             {
+                urlPattern: 'https://nuxtwrappingup.firebaseio.com/.*',
+                handler: 'cacheFirst',
+                method: 'POST',
+                strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
+            },
+            {
                 urlPattern: 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js',
                 handler: 'cacheFirst',
                 method: 'GET',

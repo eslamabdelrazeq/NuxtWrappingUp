@@ -11,6 +11,8 @@ export default {
   components: {
     ProductsList,
   },
+  middleware: ['auth'],
+
   // asyncData(context,callBack)
   // fetch(context) {
   //   console.log('executed on server only before HTML render')

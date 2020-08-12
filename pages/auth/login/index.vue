@@ -42,7 +42,7 @@
 <script>
 export default {
   layout: 'empty',
-  middleware: 'auth',
+  // middleware: 'auth',
   data() {
     return {
       email: '',

@@ -9,7 +9,7 @@
       <nuxt-link class="p-2" to="/">Home</nuxt-link>
       <nuxt-link class="p-2" to="/products">Products</nuxt-link>
       <nuxt-link class="p-2" to="/products/add">Add Product</nuxt-link>
-      <a class="p-2" v-if="isAuthenticated" @click="logout" href="#">Logout</a>
+      <a class="p-2" v-if="isAuthenticated" @click="logout" to="/auth/login">Logout</a>
     </nav>
     <a class="btn btn-outline-primary" href="#">Sign up</a>
   </div>
@@ -18,10 +18,10 @@
 export default {
   methods: {
     logout() {
+      console.log("logged out");
       if (this.isAuthenticated) {
         this.$store.dispatch('clearToken');
         let that = this;
-        //this.$router.push('/auth/login');
         setTimeout(function () {
           location.reload();
         }, 200)

@@ -15,7 +15,7 @@
 import Header from '~/components/Header'
 
 export default {
-  middleware: ['log','auth'],
+  middleware: ['log'],
   components: {
     Header,
   },
